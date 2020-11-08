@@ -1,0 +1,413 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>owa package &#8212; owa-wrapper 1.0 documentation</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pyramid.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="owa" href="modules.html" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head><body>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="modules.html" title="owa"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">owa-wrapper 1.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" accesskey="U">owa</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">owa package</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="owa-package">
+<h1>owa package<a class="headerlink" href="#owa-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-owa.config">
+<span id="owa-config-module"></span><h2>owa.config module<a class="headerlink" href="#module-owa.config" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-owa.owa_wrapper">
+<span id="owa-owa-wrapper-module"></span><h2>owa.owa_wrapper module<a class="headerlink" href="#module-owa.owa_wrapper" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="owa.owa_wrapper.OwaWrapper">
+<em class="property">class </em><code class="sig-prename descclassname">owa.owa_wrapper.</code><code class="sig-name descname">OwaWrapper</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">base_url</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">apikey</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">version</span><span class="o">=</span><span class="default_value">'v1'</span></em>, <em class="sig-param"><span class="n">module</span><span class="o">=</span><span class="default_value">'base'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/owa/owa_wrapper.html#OwaWrapper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owa.owa_wrapper.OwaWrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Wrapper for Open Web Analytics - Data Access Api</p>
+<dl class="py method">
+<dt id="owa.owa_wrapper.OwaWrapper.add_site">
+<code class="sig-name descname">add_site</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">domain</span></em>, <em class="sig-param"><span class="n">name</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">description</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">site_family</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">return_id</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">return_tracking_code</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/owa/owa_wrapper.html#OwaWrapper.add_site"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owa.owa_wrapper.OwaWrapper.add_site" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add new website to tracking roster</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – full url icluding protocol</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – name of site, defaults to None</p></li>
+<li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – short description of site, defaults to None</p></li>
+<li><p><strong>site_family</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – site family for UI sorting, defaults to None</p></li>
+<li><p><strong>return_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>optional</em>) – Lookup and return newly created siteid, defaults to False</p></li>
+<li><p><strong>return_tracking_code</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>optional</em>) – Return full tracking code, defaults to False</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>tracking code, siteid, or None</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a> or <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="owa.owa_wrapper.OwaWrapper.add_site_user">
+<code class="sig-name descname">add_site_user</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">user_id</span></em>, <em class="sig-param"><span class="n">site_id</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/owa/owa_wrapper.html#OwaWrapper.add_site_user"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owa.owa_wrapper.OwaWrapper.add_site_user" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add user to site</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – user id to add to site</p></li>
+<li><p><strong>site_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – site_id to add user to</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="owa.owa_wrapper.OwaWrapper.add_user">
+<code class="sig-name descname">add_user</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">user_id</span></em>, <em class="sig-param"><span class="n">email</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">real_name</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">role</span><span class="o">=</span><span class="default_value">'admin'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/owa/owa_wrapper.html#OwaWrapper.add_user"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owa.owa_wrapper.OwaWrapper.add_user" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add New User</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – a new unique user id</p></li>
+<li><p><strong>email</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – full email address, defaults to None</p></li>
+<li><p><strong>real_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – full name, defaults to None</p></li>
+<li><p><strong>role</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – role - must be admin?, defaults to ‘admin’</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="owa.owa_wrapper.OwaWrapper.delete_site">
+<code class="sig-name descname">delete_site</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">siteId</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/owa/owa_wrapper.html#OwaWrapper.delete_site"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owa.owa_wrapper.OwaWrapper.delete_site" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete site</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>siteId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – site id to delete from tracking</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="owa.owa_wrapper.OwaWrapper.delete_user">
+<code class="sig-name descname">delete_user</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">user_id</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/owa/owa_wrapper.html#OwaWrapper.delete_user"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owa.owa_wrapper.OwaWrapper.delete_user" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete a user</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>user_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – user_id to delete</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="owa.owa_wrapper.OwaWrapper.get_clicks">
+<code class="sig-name descname">get_clicks</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">page_url</span></em>, <em class="sig-param"><span class="n">document_id</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/owa/owa_wrapper.html#OwaWrapper.get_clicks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owa.owa_wrapper.OwaWrapper.get_clicks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return clicks from page</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>page_url</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – full url of page</p></li>
+<li><p><strong>document_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – document_id?, defaults to None</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List of clicks</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="owa.owa_wrapper.OwaWrapper.get_clickstream">
+<code class="sig-name descname">get_clickstream</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sessionId</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/owa/owa_wrapper.html#OwaWrapper.get_clickstream"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owa.owa_wrapper.OwaWrapper.get_clickstream" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return clickstream of a specific session
+(time ordered list of pages viewed)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>sessionId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – sessionId to get stream for</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of clicks</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="owa.owa_wrapper.OwaWrapper.get_latest_actions">
+<code class="sig-name descname">get_latest_actions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">siteId</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/owa/owa_wrapper.html#OwaWrapper.get_latest_actions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owa.owa_wrapper.OwaWrapper.get_latest_actions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return latest actions for site</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>siteId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – site id</p></li>
+<li><p><strong>startDate</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – a yyyymmdd data string (e.g. 20200415)</p></li>
+<li><p><strong>endDate</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – a yyyymmdd data string (e.g. 20200415)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of latest actions</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="owa.owa_wrapper.OwaWrapper.get_latest_visits">
+<code class="sig-name descname">get_latest_visits</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">siteId</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/owa/owa_wrapper.html#OwaWrapper.get_latest_visits"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owa.owa_wrapper.OwaWrapper.get_latest_visits" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return latest visits</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>siteId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – site Id</p></li>
+<li><p><strong>startDate</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – a yyyymmdd data string (e.g. 20200415)</p></li>
+<li><p><strong>endDate</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – a yyyymmdd data string (e.g. 20200415)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of visits</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="owa.owa_wrapper.OwaWrapper.get_report">
+<code class="sig-name descname">get_report</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/owa/owa_wrapper.html#OwaWrapper.get_report"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owa.owa_wrapper.OwaWrapper.get_report" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return custom report</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>custom report</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="owa.owa_wrapper.OwaWrapper.get_siteid">
+<code class="sig-name descname">get_siteid</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name_or_url</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/owa/owa_wrapper.html#OwaWrapper.get_siteid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owa.owa_wrapper.OwaWrapper.get_siteid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return siteId by name or url</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name_or_url</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – name or url of site to lookup</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>siteid</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a> or <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="owa.owa_wrapper.OwaWrapper.get_sites">
+<code class="sig-name descname">get_sites</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">full_data</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/owa/owa_wrapper.html#OwaWrapper.get_sites"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owa.owa_wrapper.OwaWrapper.get_sites" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get list of sites</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>full_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a><em>, </em><em>optional</em>) – include db schema in return data, defaults to False</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of sites or dict if full_data is True</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)">list</a> or <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="owa.owa_wrapper.OwaWrapper.get_tracking_code">
+<code class="sig-name descname">get_tracking_code</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">site_id</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/owa/owa_wrapper.html#OwaWrapper.get_tracking_code"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owa.owa_wrapper.OwaWrapper.get_tracking_code" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return tracking code</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>site_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – site id to insert into tracking code</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>tracking code to embed in html</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="owa.owa_wrapper.OwaWrapper.get_users">
+<code class="sig-name descname">get_users</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/owa/owa_wrapper.html#OwaWrapper.get_users"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owa.owa_wrapper.OwaWrapper.get_users" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all users</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>List of users and their roles</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="owa.owa_wrapper.OwaWrapper.get_visit">
+<code class="sig-name descname">get_visit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sessionId</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/owa/owa_wrapper.html#OwaWrapper.get_visit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#owa.owa_wrapper.OwaWrapper.get_visit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return info on visit</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>sessionId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – session Id</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>visit info</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-owa">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-owa" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">owa package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-owa.config">owa.config module</a></li>
+<li><a class="reference internal" href="#module-owa.owa_wrapper">owa.owa_wrapper module</a></li>
+<li><a class="reference internal" href="#module-owa">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="modules.html"
+                        title="previous chapter">owa</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/owa.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="modules.html" title="owa"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">owa-wrapper 1.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >owa</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">owa package</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Amir Almusawi.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.3.0.
+    </div>
+  </body>
+</html>

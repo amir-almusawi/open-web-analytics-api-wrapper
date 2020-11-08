@@ -1,0 +1,370 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>owa.owa_wrapper &#8212; owa-wrapper 1.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pyramid.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head><body>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">owa-wrapper 1.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">owa.owa_wrapper</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for owa.owa_wrapper</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/python3.7</span>
+<span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="kn">import</span> <span class="n">urlencode</span><span class="p">,</span> <span class="n">quote_plus</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">config</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">TODO:</span>
+<span class="sd">[ ] delete_site() returns 405</span>
+<span class="sd">[ ] delete_user() returns 405</span>
+<span class="sd">[ ] add_user() returns 422</span>
+<span class="sd">[ ] get_latest_actions() returns 422</span>
+<span class="sd">[ ] get_reports() needs work</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+
+<div class="viewcode-block" id="OwaWrapper"><a class="viewcode-back" href="../../owa.html#owa.owa_wrapper.OwaWrapper">[docs]</a><span class="k">class</span> <span class="nc">OwaWrapper</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Wrapper for Open Web Analytics - Data Access Api&quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">base_url</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">apikey</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s2">&quot;v1&quot;</span><span class="p">,</span> <span class="n">module</span><span class="o">=</span><span class="s2">&quot;base&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        :param base_url: url of owa install or use config file, defaults to None</span>
+<span class="sd">        :type base_url: str, optional</span>
+<span class="sd">        :param apikey: apikey or use config file, defaults to None</span>
+<span class="sd">        :type apikey: str, optional</span>
+<span class="sd">        :param version: version, defaults to &quot;v1&quot;</span>
+<span class="sd">        :type version: str, optional</span>
+<span class="sd">        :param module: module, defaults to &quot;base&quot;</span>
+<span class="sd">        :type module: str, optional</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_base_url</span> <span class="o">=</span> <span class="n">base_url</span> <span class="ow">or</span> <span class="n">config</span><span class="o">.</span><span class="n">base_url</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">apikey</span> <span class="o">=</span> <span class="n">apikey</span> <span class="ow">or</span> <span class="n">config</span><span class="o">.</span><span class="n">apikey</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">module</span> <span class="o">=</span> <span class="n">module</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">version</span> <span class="o">=</span> <span class="n">version</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_s</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
+        
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">apikey</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_url</span><span class="p">):</span>
+            <span class="n">exit</span><span class="p">(</span><span class="s1">&#39;base_url and apikey required. Set in config.py or as kwargs&#39;</span><span class="p">)</span>
+                
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_url</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_base_url</span> <span class="o">+=</span> <span class="s1">&#39;/&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_url</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;/api/?&#39;</span>
+        
+    <span class="k">def</span> <span class="nf">_api</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;owa_module&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">module</span><span class="p">,</span>
+            <span class="s2">&quot;owa_version&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">version</span><span class="p">,</span>
+            <span class="s2">&quot;owa_apiKey&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">apikey</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_url</span> <span class="o">+</span> <span class="n">urlencode</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>                    
+                <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_s</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+                <span class="n">r</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+                <span class="c1"># print(method, r.status_code, url)</span>
+                
+                <span class="n">r</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>                
+                <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">r</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">)</span>   
+                                
+            <span class="k">except</span> <span class="p">(</span><span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">InvalidURL</span><span class="p">,</span>
+                    <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">HTTPError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+                <span class="k">return</span>               
+            
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        
+<div class="viewcode-block" id="OwaWrapper.get_sites"><a class="viewcode-back" href="../../owa.html#owa.owa_wrapper.OwaWrapper.get_sites">[docs]</a>    <span class="k">def</span> <span class="nf">get_sites</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">full_data</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>             
+        <span class="sd">&quot;&quot;&quot;Get list of sites</span>
+
+<span class="sd">        :param full_data: include db schema in return data, defaults to False</span>
+<span class="sd">        :type full_data: bool, optional</span>
+<span class="sd">        :return: list of sites or dict if full_data is True</span>
+<span class="sd">        :rtype: list or dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_api</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="n">owa_do</span><span class="o">=</span><span class="s1">&#39;sites&#39;</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">full_data</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">data</span>
+        
+        <span class="k">return</span> <span class="p">[{</span>
+            <span class="s2">&quot;id&quot;</span><span class="p">:</span><span class="n">k</span><span class="p">,</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="s1">&#39;properties&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">][</span><span class="s1">&#39;value&#39;</span><span class="p">],</span>
+            <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="s1">&#39;properties&#39;</span><span class="p">][</span><span class="s1">&#39;description&#39;</span><span class="p">][</span><span class="s1">&#39;value&#39;</span><span class="p">],</span>
+            <span class="s2">&quot;domain&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="s1">&#39;properties&#39;</span><span class="p">][</span><span class="s1">&#39;domain&#39;</span><span class="p">][</span><span class="s1">&#39;value&#39;</span><span class="p">],</span>
+            <span class="s2">&quot;site_family&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="s1">&#39;properties&#39;</span><span class="p">][</span><span class="s1">&#39;site_family&#39;</span><span class="p">][</span><span class="s1">&#39;value&#39;</span><span class="p">],</span>
+            <span class="s2">&quot;settings&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="s1">&#39;properties&#39;</span><span class="p">][</span><span class="s1">&#39;settings&#39;</span><span class="p">][</span><span class="s1">&#39;value&#39;</span><span class="p">]</span>
+            <span class="p">}</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">data</span><span class="p">]</span>       </div>
+  
+<div class="viewcode-block" id="OwaWrapper.add_site"><a class="viewcode-back" href="../../owa.html#owa.owa_wrapper.OwaWrapper.add_site">[docs]</a>    <span class="k">def</span> <span class="nf">add_site</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">site_family</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">return_id</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">return_tracking_code</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add new website to tracking roster</span>
+
+<span class="sd">        :param domain: full url icluding protocol</span>
+<span class="sd">        :type domain: str</span>
+<span class="sd">        :param name: name of site, defaults to None</span>
+<span class="sd">        :type name: str, optional</span>
+<span class="sd">        :param description: short description of site, defaults to None</span>
+<span class="sd">        :type description: str, optional</span>
+<span class="sd">        :param site_family: site family for UI sorting, defaults to None</span>
+<span class="sd">        :type site_family: str, optional</span>
+<span class="sd">        :param return_id: Lookup and return newly created siteid, defaults to False</span>
+<span class="sd">        :type return_id: bool, optional</span>
+<span class="sd">        :param return_tracking_code: Return full tracking code, defaults to False</span>
+<span class="sd">        :type return_tracking_code: bool, optional</span>
+<span class="sd">        :return: tracking code, siteid, or None</span>
+<span class="sd">        :rtype: str or None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_api</span><span class="p">(</span><span class="s1">&#39;POST&#39;</span><span class="p">,</span> <span class="n">owa_do</span><span class="o">=</span><span class="s1">&#39;sites&#39;</span><span class="p">,</span> <span class="n">owa_domain</span><span class="o">=</span><span class="n">domain</span><span class="p">,</span> <span class="n">owa_name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+                      <span class="n">owa_description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span> <span class="n">owa_site_family</span><span class="o">=</span><span class="n">site_family</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">return_id</span> <span class="ow">or</span> <span class="n">return_tracking_code</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">r</span>
+        
+        <span class="n">site_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_siteid</span><span class="p">(</span><span class="n">domain</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">return_tracking_code</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_tracking_code</span><span class="p">(</span><span class="n">site_id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">site_id</span></div>
+
+<div class="viewcode-block" id="OwaWrapper.get_tracking_code"><a class="viewcode-back" href="../../owa.html#owa.owa_wrapper.OwaWrapper.get_tracking_code">[docs]</a>    <span class="k">def</span> <span class="nf">get_tracking_code</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">site_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return tracking code</span>
+
+<span class="sd">        :param site_id: site id to insert into tracking code</span>
+<span class="sd">        :type site_id: str</span>
+<span class="sd">        :return: tracking code to embed in html</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">config</span><span class="o">.</span><span class="n">tracking_code</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
+            <span class="s1">&#39;</span><span class="si">{url}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_url</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{site_id}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">site_id</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span></div>
+       
+<div class="viewcode-block" id="OwaWrapper.get_siteid"><a class="viewcode-back" href="../../owa.html#owa.owa_wrapper.OwaWrapper.get_siteid">[docs]</a>    <span class="k">def</span> <span class="nf">get_siteid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name_or_url</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return siteId by name or url</span>
+
+<span class="sd">        :param name_or_url: name or url of site to lookup</span>
+<span class="sd">        :type name_or_url: str</span>
+<span class="sd">        :return: siteid</span>
+<span class="sd">        :rtype: str or None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">site</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_sites</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="o">==</span><span class="n">name_or_url</span> <span class="ow">or</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;domain&#39;</span><span class="p">]</span><span class="o">==</span><span class="n">name_or_url</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">site</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">site</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
+    
+<div class="viewcode-block" id="OwaWrapper.delete_site"><a class="viewcode-back" href="../../owa.html#owa.owa_wrapper.OwaWrapper.delete_site">[docs]</a>    <span class="k">def</span> <span class="nf">delete_site</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">siteId</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Delete site</span>
+
+<span class="sd">        :param siteId: site id to delete from tracking</span>
+<span class="sd">        :type siteId: str</span>
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_api</span><span class="p">(</span><span class="s1">&#39;DELETE&#39;</span><span class="p">,</span> <span class="n">owa_do</span><span class="o">=</span><span class="s1">&#39;sites&#39;</span><span class="p">,</span> <span class="n">owa_siteId</span><span class="o">=</span><span class="n">siteId</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="OwaWrapper.get_users"><a class="viewcode-back" href="../../owa.html#owa.owa_wrapper.OwaWrapper.get_users">[docs]</a>    <span class="k">def</span> <span class="nf">get_users</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get all users</span>
+
+<span class="sd">        :return: List of users and their roles</span>
+<span class="sd">        :rtype: list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_api</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="n">owa_do</span><span class="o">=</span><span class="s1">&#39;users&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="OwaWrapper.add_user"><a class="viewcode-back" href="../../owa.html#owa.owa_wrapper.OwaWrapper.add_user">[docs]</a>    <span class="k">def</span> <span class="nf">add_user</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">email</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">real_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="s1">&#39;admin&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add New User</span>
+
+<span class="sd">        :param user_id: a new unique user id</span>
+<span class="sd">        :type user_id: str</span>
+<span class="sd">        :param email: full email address, defaults to None</span>
+<span class="sd">        :type email: str, optional</span>
+<span class="sd">        :param real_name: full name, defaults to None</span>
+<span class="sd">        :type real_name: str, optional</span>
+<span class="sd">        :param role: role - must be admin?, defaults to &#39;admin&#39;</span>
+<span class="sd">        :type role: str, optional</span>
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_api</span><span class="p">(</span><span class="s1">&#39;POST&#39;</span><span class="p">,</span> <span class="n">owa_do</span><span class="o">=</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="n">owa_email_address</span><span class="o">=</span><span class="n">email</span><span class="p">,</span>
+                         <span class="n">owa_real_name</span><span class="o">=</span><span class="n">real_name</span><span class="p">,</span> <span class="n">owa_role</span><span class="o">=</span><span class="n">role</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="OwaWrapper.add_site_user"><a class="viewcode-back" href="../../owa.html#owa.owa_wrapper.OwaWrapper.add_site_user">[docs]</a>    <span class="k">def</span> <span class="nf">add_site_user</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">site_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add user to site</span>
+
+<span class="sd">        :param user_id: user id to add to site</span>
+<span class="sd">        :type user_id: str</span>
+<span class="sd">        :param site_id: site_id to add user to</span>
+<span class="sd">        :type site_id: str</span>
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_api</span><span class="p">(</span><span class="s1">&#39;POST&#39;</span><span class="p">,</span> <span class="n">owa_user_id</span><span class="o">=</span><span class="n">user_id</span><span class="p">,</span> <span class="n">owa_site_id</span><span class="o">=</span><span class="n">site_id</span><span class="p">,</span>
+                         <span class="n">owa_do</span><span class="o">=</span><span class="s1">&#39;siteUsers&#39;</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="OwaWrapper.delete_user"><a class="viewcode-back" href="../../owa.html#owa.owa_wrapper.OwaWrapper.delete_user">[docs]</a>    <span class="k">def</span> <span class="nf">delete_user</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Delete a user</span>
+
+<span class="sd">        :param user_id: user_id to delete</span>
+<span class="sd">        :type user_id: str</span>
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_api</span><span class="p">(</span><span class="s1">&#39;DELETE&#39;</span><span class="p">,</span> <span class="n">owa_user_id</span><span class="o">=</span><span class="n">user_id</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="OwaWrapper.get_report"><a class="viewcode-back" href="../../owa.html#owa.owa_wrapper.OwaWrapper.get_report">[docs]</a>    <span class="k">def</span> <span class="nf">get_report</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return custom report</span>
+
+<span class="sd">        :return: custom report</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_api</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="n">owa_do</span><span class="o">=</span><span class="s1">&#39;reports&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+       
+<div class="viewcode-block" id="OwaWrapper.get_latest_visits"><a class="viewcode-back" href="../../owa.html#owa.owa_wrapper.OwaWrapper.get_latest_visits">[docs]</a>    <span class="k">def</span> <span class="nf">get_latest_visits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">siteId</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return latest visits</span>
+
+<span class="sd">        :param siteId: site Id</span>
+<span class="sd">        :type siteId: str</span>
+<span class="sd">        :param startDate: a yyyymmdd data string (e.g. 20200415)</span>
+<span class="sd">        :type startDate: str</span>
+<span class="sd">        :param endDate: a yyyymmdd data string (e.g. 20200415)</span>
+<span class="sd">        :type endDate: str        </span>
+<span class="sd">        :return: list of visits</span>
+<span class="sd">        :rtype: list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_api</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="n">owa_do</span><span class="o">=</span><span class="s1">&#39;reports&#39;</span><span class="p">,</span> <span class="n">owa_siteId</span><span class="o">=</span><span class="n">siteId</span><span class="p">,</span>
+                         <span class="n">owa_report_name</span><span class="o">=</span><span class="s1">&#39;latest_visits&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="OwaWrapper.get_visit"><a class="viewcode-back" href="../../owa.html#owa.owa_wrapper.OwaWrapper.get_visit">[docs]</a>    <span class="k">def</span> <span class="nf">get_visit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sessionId</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return info on visit</span>
+
+<span class="sd">        :param sessionId: session Id</span>
+<span class="sd">        :type sessionId: str</span>
+<span class="sd">        :return: visit info</span>
+<span class="sd">        :rtype: list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_api</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="n">owa_do</span><span class="o">=</span><span class="s1">&#39;reports&#39;</span><span class="p">,</span>
+                         <span class="n">owa_report_name</span><span class="o">=</span><span class="s1">&#39;visit&#39;</span><span class="p">,</span> <span class="n">owa_sessionId</span><span class="o">=</span><span class="n">sessionId</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="OwaWrapper.get_latest_actions"><a class="viewcode-back" href="../../owa.html#owa.owa_wrapper.OwaWrapper.get_latest_actions">[docs]</a>    <span class="k">def</span> <span class="nf">get_latest_actions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">siteId</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return latest actions for site</span>
+
+<span class="sd">        :param siteId: site id</span>
+<span class="sd">        :type siteId: str</span>
+<span class="sd">        :param startDate: a yyyymmdd data string (e.g. 20200415)</span>
+<span class="sd">        :type startDate: str</span>
+<span class="sd">        :param endDate: a yyyymmdd data string (e.g. 20200415)</span>
+<span class="sd">        :type endDate: str</span>
+<span class="sd">        :return: list of latest actions</span>
+<span class="sd">        :rtype: list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_api</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="n">owa_do</span><span class="o">=</span><span class="s1">&#39;reports&#39;</span><span class="p">,</span> <span class="n">owa_siteId</span><span class="o">=</span><span class="n">siteId</span><span class="p">,</span>
+                         <span class="n">owa_report_name</span><span class="o">=</span><span class="s1">&#39;latest_actions&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="OwaWrapper.get_clickstream"><a class="viewcode-back" href="../../owa.html#owa.owa_wrapper.OwaWrapper.get_clickstream">[docs]</a>    <span class="k">def</span> <span class="nf">get_clickstream</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sessionId</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return clickstream of a specific session</span>
+<span class="sd">        (time ordered list of pages viewed)</span>
+
+<span class="sd">        :param sessionId: sessionId to get stream for</span>
+<span class="sd">        :type sessionId: str</span>
+<span class="sd">        :return: list of clicks</span>
+<span class="sd">        :rtype: list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_api</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="n">owa_do</span><span class="o">=</span><span class="s1">&#39;reports&#39;</span><span class="p">,</span> <span class="n">owa_report_name</span><span class="o">=</span><span class="s1">&#39;clickstream&#39;</span><span class="p">,</span>
+                         <span class="n">owa_sessionId</span><span class="o">=</span><span class="n">sessionId</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="OwaWrapper.get_clicks"><a class="viewcode-back" href="../../owa.html#owa.owa_wrapper.OwaWrapper.get_clicks">[docs]</a>    <span class="k">def</span> <span class="nf">get_clicks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">page_url</span><span class="p">,</span> <span class="n">document_id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return clicks from page</span>
+
+<span class="sd">        :param page_url: full url of page</span>
+<span class="sd">        :type page_url: str</span>
+<span class="sd">        :param document_id: document_id?, defaults to None</span>
+<span class="sd">        :type document_id: str, optional</span>
+<span class="sd">        :return: List of clicks</span>
+<span class="sd">        :rtype: list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_api</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="n">owa_do</span><span class="o">=</span><span class="s1">&#39;reports&#39;</span><span class="p">,</span> <span class="n">owa_report_name</span><span class="o">=</span><span class="s1">&#39;clicks&#39;</span><span class="p">,</span>
+                         <span class="n">owa_pageUrl</span><span class="o">=</span><span class="n">page_url</span><span class="p">,</span> <span class="n">owa_document_id</span><span class="o">=</span><span class="n">document_id</span><span class="p">)</span>    </div></div>
+ 
+</pre></div>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">owa-wrapper 1.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">owa.owa_wrapper</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Amir Almusawi.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.3.0.
+    </div>
+  </body>
+</html>

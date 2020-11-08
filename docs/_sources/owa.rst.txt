@@ -1,0 +1,29 @@
+owa package
+===========
+
+Submodules
+----------
+
+owa.config module
+-----------------
+
+.. automodule:: owa.config
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+owa.owa\_wrapper module
+-----------------------
+
+.. automodule:: owa.owa_wrapper
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: owa
+   :members:
+   :undoc-members:
+   :show-inheritance:
