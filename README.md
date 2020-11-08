@@ -5,7 +5,7 @@ I wrote this to use with my web app scaffolding templating system. My primary us
 
 Open Web Analytics API docs: https://github.com/Open-Web-Analytics/Open-Web-Analytics/wiki/REST-API
 
-My Docs: 
+My Docs: https://amir-almusawi.github.io/owa_wrapper/owa.html
 
 
 ```python
