@@ -1,5 +1,5 @@
-apikey="afa51d129a7ea8c6c17ee3779914f198"
-base_url="https://analytics.amir.click"
+apikey=""
+base_url=""
 
 tracking_code = """
 <!-- Start Open Web Analytics Tracker -->
