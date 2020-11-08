@@ -19,4 +19,4 @@ tracking_code = analytics.add_site('https://www.example.com,
                                    return_tracking_code=True)
 
 add_analytics_to_project(tracking_code)
-'''
+```
